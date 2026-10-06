@@ -1,1 +1,89 @@
-c:\Users\talarisu\Downloads\ChatGPT Image Sep 17, 2026, 11_21_04 AM.png
+# ===== ANSIBLE ROBOSHOP TEST COMMANDS =====
+
+# Version
+ansible --version
+
+# Inventory
+ansible-inventory -i inventory.ini --graph
+ansible-inventory -i inventory.ini --list
+
+# Test all servers
+ansible -i inventory.ini all -m ping
+
+# Test specific service
+ansible -i inventory.ini shipping -m ping
+
+# Check user / root
+ansible -i inventory.ini all -m command -a "whoami"
+ansible -i inventory.ini all -b -m command -a "whoami"
+
+# Check Python / pip
+ansible -i inventory.ini all -m command -a "python3 --version"
+ansible -i inventory.ini all -m command -a "pip3 --version"
+
+# Check boto3 / botocore
+ansible -i inventory.ini all -m command -a "python3 -c 'import boto3; print(boto3.__version__)'"
+ansible -i inventory.ini all -m command -a "python3 -c 'import botocore; print(botocore.__version__)'"
+
+# Check OS
+ansible -i inventory.ini all -m command -a "cat /etc/os-release"
+
+# Check disk / memory / CPU
+ansible -i inventory.ini all -m command -a "df -h"
+ansible -i inventory.ini all -m command -a "free -h"
+ansible -i inventory.ini all -m command -a "nproc"
+
+# Check hostname / IP
+ansible -i inventory.ini all -m command -a "hostname"
+ansible -i inventory.ini all -m command -a "hostname -I"
+
+# Check failed services
+ansible -i inventory.ini all -b -m command -a "systemctl --failed"
+
+# Check ports
+ansible -i inventory.ini all -b -m command -a "ss -lntp"
+
+# Check DNS
+ansible -i inventory.ini all -m command -a "hostname -f"
+getent hosts catalogue-dev.daws88s.online
+
+# Check application files
+ansible -i inventory.ini shipping -b -m command -a "ls -l /app"
+
+# Check service status
+ansible -i inventory.ini shipping -b -m command -a "systemctl status shipping --no-pager"
+
+# Check logs
+ansible -i inventory.ini shipping -b -m command -a "journalctl -u shipping -n 50 --no-pager"
+
+# Test application
+ansible -i inventory.ini frontend -m shell -a "curl -I http://localhost"
+
+# Test DB connectivity
+ansible -i inventory.ini shipping -m shell -a "nc -zv mysql-dev.daws88s.online 3306"
+
+# Playbook syntax
+ansible-playbook -i inventory.ini roboshop.yaml --syntax-check
+
+# List hosts
+ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping --list-hosts
+
+# List tasks
+ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping --list-tasks
+
+# Dry run
+ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping --check
+
+# Run service
+ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping
+
+# Debug
+ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping -vvv
+
+# Daily COMMANDS
+
+ansible -i inventory.ini all -m ping
+ansible -i inventory.ini all -b -m command -a "systemctl --failed"
+ansible-playbook -i inventory.ini roboshop.yaml --syntax-check
+ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping --check
+ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping -vvv
