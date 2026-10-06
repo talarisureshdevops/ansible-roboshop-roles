@@ -87,3 +87,25 @@ ansible -i inventory.ini all -b -m command -a "systemctl --failed"
 ansible-playbook -i inventory.ini roboshop.yaml --syntax-check
 ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping --check
 ansible-playbook -i inventory.ini roboshop.yaml -e component=shipping -vvv
+
+Ansible topic roadmap
+Priority	Topic	What to learn
+⭐⭐⭐	Inventory	Static, dynamic inventory, groups, group_vars, host_vars
+⭐⭐⭐	Variables	precedence, facts, registered variables, set_fact
+⭐⭐⭐	Roles	role structure, include_role, import_role, reuse
+⭐⭐⭐	Templates	Jinja2, .j2, conditions, loops
+⭐⭐⭐	Handlers	restart/reload services after configuration changes
+⭐⭐⭐	Loops	loop, with_items, dictionaries
+⭐⭐⭐	Conditionals	when, changed_when, failed_when
+⭐⭐⭐	Vault	encrypt passwords, secrets, AWS credentials
+⭐⭐⭐	Tags	run only selected tasks
+⭐⭐⭐	Error handling	block, rescue, always
+⭐⭐	Collections	amazon.aws, community.mysql, etc.
+⭐⭐	AWS modules	EC2, VPC, Route53, S3, security groups
+⭐⭐	Dynamic inventory	AWS EC2 discovery
+⭐⭐	Ansible Galaxy	download/create reusable roles
+⭐⭐	Parallelism	forks, serial, strategy
+⭐⭐	Performance	fact caching, pipelining
+⭐⭐	Security	Vault, SSH keys, least privilege
+⭐⭐	CI/CD	GitHub Actions/Jenkins + Ansible
+⭐	Ansible Automation Platform	AWX / Controller concepts
